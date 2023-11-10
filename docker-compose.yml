@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:13
+    ports:
+      - 5432:5432
+    environment: 
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - pgdata:/var/lib/postgresql/data 
+    container_name: postgres
+
+  backend:
+    image: his/api:latest
+    # user: 1000:1000
+    container_name: backend
+    build: .
+    environment:
+      APP_DB_HOST: postgres
+    ports:
+      - 8000:8000
+    volumes:
+      - ./project:/app
+    depends_on: 
+      - postgres
+
+volumes:
+  pgdata: 
