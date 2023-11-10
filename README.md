@@ -1,16 +1,11 @@
 # HIS_Project_Backend
 
 setup:
-python manage.py migrate
-python manage.py runserver 0.0.0.0:8000
+python manage.py migrate / python manage.py runserver 0.0.0.0:8000
 
 or
 
-docker-compose up
-
-docker exec -it postgres bash
-psql -h localhost -U user
-CREATE DATABASE hisdb;
+docker-compose up / docker exec -it postgres bash / psql -h localhost -U user / CREATE DATABASE hisdb;
 
 
 database schema:
