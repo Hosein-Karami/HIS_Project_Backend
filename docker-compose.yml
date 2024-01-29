@@ -2,19 +2,21 @@ version: "3.8"
 
 services:
   api:
-    image: HIS/api:latest
+    image: his/api:latest
     container_name: api
-    # build: .
+    build: .
     volumes:
-      # - ./project:/app
-      - ./project/db.sqlite3:/app/db.sqlite3
+      - ./project:/app
+      # - ./project/db.sqlite3:/app/db.sqlite3
     networks:
       - backnet
   
   web:
     image: nginx:latest
+    container_name: nginx
+    build: ./nginx
     ports:
-      - 8888:8000
+      - 8888:80
     networks:
       - backnet
     depends_on:

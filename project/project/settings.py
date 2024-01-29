@@ -28,6 +28,8 @@ SECRET_KEY = 'django-insecure-7issab(se24b2%64@j&gqv5&d8x0k_ok&cri=sonyxqhiy3)r&
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+ALLOWED_ORIGINS = ['http://*', 'https://*', 'http://localhost:8888', 'https://localhost:8888']
+CSRF_TRUSTED_ORIGINS = ['http://*', 'https://*', 'http://localhost:8888', 'https://localhost:8888']
 
 CORS_ORIGIN_ALLOW_ALL = True
 
