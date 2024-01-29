@@ -7,5 +7,6 @@ urlpatterns = [
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('register/', views.Register.as_view(), name='patient_register'),
     path('login/', views.Login.as_view(), name='login'),
+    path('userinfo/', views.UserInfo.as_view(), name='get_user_informations'),
     path('calender/', include('doctorsCalender.urls')),
 ]
