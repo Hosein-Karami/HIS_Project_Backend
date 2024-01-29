@@ -1,30 +1,32 @@
 version: "3.8"
 
 services:
-  postgres:
-    image: postgres:13
-    ports:
-      - 5432:5432
-    environment: 
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
+  api:
+    image: HIS/api:latest
+    container_name: api
+    # build: .
     volumes:
-      - pgdata:/var/lib/postgresql/data 
-    container_name: postgres
-
-  backend:
-    image: his/api:latest
-    # user: 1000:1000
-    container_name: backend
-    build: .
-    environment:
-      APP_DB_HOST: postgres
+      # - ./project:/app
+      - ./project/db.sqlite3:/app/db.sqlite3
+    networks:
+      - backnet
+  
+  web:
+    image: nginx:latest
     ports:
-      - 8000:8000
+      - 8888:8000
+    networks:
+      - backnet
+    depends_on:
+      - api
     volumes:
-      - ./project:/app
-    depends_on: 
-      - postgres
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - staticfiles:/var/www/html/staticfiles
+      - ./nginx/dist:/var/www/html/app
 
 volumes:
-  pgdata: 
+  service-data:
+  staticfiles:
+
+networks:
+  backnet:
