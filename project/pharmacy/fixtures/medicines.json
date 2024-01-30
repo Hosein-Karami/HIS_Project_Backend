@@ -1,0 +1,3 @@
+[
+  {"model": "pharmacy.Medicine","pk": 1, "fields": {"name": "", "dose": 0, "type": "", "expire_date": "", "amount": 0}}
+]

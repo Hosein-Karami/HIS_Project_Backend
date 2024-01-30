@@ -50,10 +50,10 @@ class Reserve(APIView):
         end = int(time.split('-')[2].split(':')[0])
 
         for i in range(end-start):
-          data.append({'time': time.split('-')[0] + '-' + str(start) + ':00-' + str(start) + ':15', 'value': False})
-          data.append({'time': time.split('-')[0] + '-' + str(start) + ':15-' + str(start) + ':30', 'value': False})
-          data.append({'time': time.split('-')[0] + '-' + str(start) + ':30-' + str(start) + ':45', 'value': False})
-          data.append({'time': time.split('-')[0] + '-' + str(start) + ':45-' + str(start+1) + ':00', 'value': False})
+          data.append({'time': time.split('-')[0] + '-' + str(start) + ':00-' + str(start) + ':15', 'value': False, 'patienId': -1})
+          data.append({'time': time.split('-')[0] + '-' + str(start) + ':15-' + str(start) + ':30', 'value': False, 'patienId': -1})
+          data.append({'time': time.split('-')[0] + '-' + str(start) + ':30-' + str(start) + ':45', 'value': False, 'patienId': -1})
+          data.append({'time': time.split('-')[0] + '-' + str(start) + ':45-' + str(start+1) + ':00', 'value': False, 'patienId': -1})
           start += 1
       
       Appointment.objects.create(doctor = CustomUser.objects.filter(id = id)[0], data = data)
@@ -68,7 +68,28 @@ class Reserve(APIView):
     for item in reserved.data:
       if item['time'] == request.data['time']:
         item['value'] = True
+        item['patientId'] = request.data['patientId']
         break
     reserved.save()
 
     return Response(reserved.data)
+
+class PatientList(APIView):
+  def get(self, request):
+    try:
+      appointment = Appointment.objects.get(doctor_id = request.GET['id'])
+      data = []
+
+      for item in appointment.data:
+        if item['value'] == True:
+          tmp = {'name': '', 'age': '', 'visitTime': item['time']}
+          
+          patient = CustomUser.objects.get(id = item['patientId'])
+          tmp['name'] = patient.first_name + ' ' + patient.last_name
+          tmp['age'] = 1402 - int(patient.birthdate.split('/')[0])
+
+          data.append(tmp)
+    except:
+      data = []
+    
+    return Response(data)
