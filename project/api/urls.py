@@ -9,4 +9,5 @@ urlpatterns = [
     path('login/', views.Login.as_view(), name='login'),
     path('userinfo/', views.UserInfo.as_view(), name='get_user_informations'),
     path('calender/', include('doctorsCalender.urls')),
+    path('pharmacy/', include('pharmacy.urls')),
 ]

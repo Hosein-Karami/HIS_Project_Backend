@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
-    ROLE_CHOICES = (('admin', 'ادمین'),('doctor', 'دکنر'),('patient', 'بیمار'),('nurse', 'پرستار'))
+    ROLE_CHOICES = (('admin', 'ادمین'),('doctor', 'دکنر'),('patient', 'بیمار'),('nurse', 'پرستار'),('pharmacy', 'داروخانه'))
     SEX_CHOICES = (('male', 'مرد'),('female', 'زن'))
     EXPERTISE_CHOICES = (('orthopedics', 'ارتوپدی'),('digestion', 'گوارش'),('kidney', 'کلیه'),('ear_nose_throat', 'گوش و حلق و بینی'),
                          ('neurosurgery', 'جراحی اعصاب'),('general_surgery', 'جراحی عمومی'),('psychology', 'روانشناسی'),
